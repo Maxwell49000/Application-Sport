@@ -1,31 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import React from "react";
+import { Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function Home() {
+const Home = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            {/* Image d'en-tête */}
-            <Image
-                source={require('../assets/Sport.png')} // Assurez-vous que l'image est bien placée
-                style={styles.logo}
-            />
+            <Image source={require('../assets/Sport.png')} style={styles.logo} />
 
-            {/* Titre */}
-            <Text style={styles.title}>Bienvenue sur Suivi Sportif</Text>
+            <Text style={styles.title}>Bienvenue sur l'application de suivi sportif</Text>
+            <Text style={styles.subtitle}>Suivez vos activités et améliorez vos performances.</Text>
 
-            {/* Description ou texte d'introduction */}
-            <Text style={styles.subtitle}>Suivez vos séances sportives et atteignez vos objectifs !</Text>
-
-            {/* Boutons d'action */}
-            <TouchableOpacity style={styles.button} onPress={() => alert('Go to Activity')}>
+            {/* Bouton personnalisé avec TouchableOpacity */}
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("Activites")}
+            >
                 <Text style={styles.buttonText}>Commencer</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonOutline} onPress={() => alert('Go to Settings')}>
-                <Text style={styles.buttonOutlineText}>Paramètres</Text>
             </TouchableOpacity>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -36,15 +30,15 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     logo: {
-        width: 150,
-        height: 150,
-        marginBottom: 20,
+        width: 300,
+        height: 300,
+        marginBottom: 60,
     },
     title: {
         fontSize: 32,
         fontWeight: 'bold',
         color: '#2c3e50',
-        marginBottom: 10,
+        marginBottom: 100,
     },
     subtitle: {
         fontSize: 18,
@@ -55,28 +49,18 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#3498db',
-        padding: 15,
-        width: '80%',
+        paddingVertical: 20,
+        paddingHorizontal: 40,
+        width: '80%', // Prend 80% de la largeur de l'écran
         alignItems: 'center',
-        borderRadius: 10,
-        marginBottom: 15,
+        borderRadius: 15,
+        marginBottom: 20,
     },
     buttonText: {
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
     },
-    buttonOutline: {
-        borderWidth: 2,
-        borderColor: '#3498db',
-        padding: 15,
-        width: '80%',
-        alignItems: 'center',
-        borderRadius: 10,
-    },
-    buttonOutlineText: {
-        color: '#3498db',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
 });
+
+export default Home;

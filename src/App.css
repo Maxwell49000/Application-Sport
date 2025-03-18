@@ -1,0 +1,11 @@
+.scrollView {
+    overflow-y: scroll;
+    height: 100vh;
+    /* Occupe toute la hauteur disponible */
+}
+
+html,
+body {
+    overflow: auto !important;
+    height: 100%;
+}
