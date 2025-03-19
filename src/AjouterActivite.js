@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { Calendar } from "react-native-calendars";
 
 const AjouterActivite = ({ navigation }) => {
     const [nomActivite, setNomActivite] = useState("");
@@ -9,6 +10,7 @@ const AjouterActivite = ({ navigation }) => {
     const [commentaire, setCommentaire] = useState("");
     const [selectedCategorie, setSelectedCategorie] = useState("");
     const [categories, setCategories] = useState([]);
+    const [showCalendar, setShowCalendar] = useState(false); // Contrôle l'affichage du calendrier
 
     // Charger les catégories depuis l'API
     useEffect(() => {
@@ -68,6 +70,11 @@ const AjouterActivite = ({ navigation }) => {
         }
     };
 
+    const handleDateSelect = (day) => {
+        setDate(new Date(day.dateString)); // Met à jour la date sélectionnée
+        setShowCalendar(false); // Ferme le calendrier après la sélection
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ajouter une Activité</Text>
@@ -88,12 +95,25 @@ const AjouterActivite = ({ navigation }) => {
             />
 
             <Text style={styles.label}>Date (AAAA-MM-JJ) * :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Date de l'activité (AAAA-MM-JJ) *"
-                value={date.toISOString().split('T')[0]} // Affiche la date formatée
-                onChangeText={(text) => setDate(new Date(text))} // Permet à l'utilisateur d'entrer la date manuellement
-            />
+            {/* Bouton pour afficher le calendrier */}
+            <Button title="Choisir une date" onPress={() => setShowCalendar(!showCalendar)} />
+
+            {/* Affichage du calendrier si showCalendar est true */}
+            {showCalendar && (
+                <Calendar
+                    onDayPress={handleDateSelect}
+                    markedDates={{
+                        [date.toISOString().split("T")[0]]: {
+                            selected: true,
+                            selectedColor: "#28a745",
+                        },
+                    }}
+                    monthFormat={"yyyy MM"}
+                />
+            )}
+
+            {/* Espacement entre les champs */}
+            <View style={styles.spacer} />
 
             <TextInput
                 style={styles.input}
@@ -155,6 +175,9 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginBottom: 15,
         backgroundColor: "#fff",
+    },
+    spacer: {
+        height: 20, // Espacement entre les champs
     },
 });
 
